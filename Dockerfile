@@ -37,8 +37,9 @@ RUN apk add --no-cache \
     xz-dev \
     nodejs \
     npm \
-    ; &&\
-    curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python && \
+    ;
+    
+RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python && \
     rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
     
