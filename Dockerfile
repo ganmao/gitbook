@@ -30,7 +30,6 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/calibre/lib \
 RUN apk add --no-cache \
     bash \
     ca-certificates \
-    gcc \
     python \
     xdg-utils \
     xz-dev \
@@ -41,12 +40,6 @@ RUN apk add --no-cache \
 RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python && \
     rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
-    
-# Install gitbook
-RUN apk add --no-cache \
-    nodejs \
-    npm \
-    ;
     
 RUN npm install gitbook-cli -g &&\
     gitbook fetch &&\
