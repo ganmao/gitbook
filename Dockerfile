@@ -43,9 +43,11 @@ RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | pyth
     rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
     
+# Install gitbook
 RUN apk add --no-cache \
     nodejs \
     npm \
+    git \
     ;
     
 RUN npm install gitbook-cli -g &&\
