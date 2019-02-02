@@ -35,6 +35,6 @@ RUN apk add --no-cache \
     xdg-utils \
     xz-dev \
     ;
-RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main(install_dir='/opt', isolated=True)" && \
+RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python && \
     rm -rf /tmp/calibre-installer-cache
     
