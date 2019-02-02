@@ -8,7 +8,8 @@ LABEL MAINTAINER_MAIL="zdl0812@163.com" \
       ALPINE_VERSION="3.8" \
       GITBOOK_VERSION="2.6.7+latest"
 
-ENV GLIBC_VERSION="2.28-r0"
+ENV GLIBC_VERSION="2.28-r0" \
+    TIMEZONE="Asia/Shanghai"
 
 # Download and install glibc
 RUN apk add --no-cache \
@@ -30,9 +31,7 @@ RUN apk add --no-cache \
     bash \
     ca-certificates \
     gcc \
-    mesa-gl \
     python \
-    qt5-qtbase-x11 \
     xdg-utils \
     xz-dev \
     nodejs \
