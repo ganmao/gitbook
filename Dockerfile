@@ -9,7 +9,8 @@ LABEL MAINTAINER_MAIL="zdl0812@163.com" \
       GITBOOK_VERSION="2.6.7+latest"
 
 ENV GLIBC_VERSION="2.28-r0" \
-    TIMEZONE="Asia/Shanghai"
+    TIMEZONE="Asia/Shanghai" \
+    PS1="[\u@\w] \$"
 
 # Download and install glibc
 RUN apk add --no-cache \
