@@ -20,7 +20,7 @@ RUN apk add --no-cache \
     curl -k -Lo glibc-bin.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk" && \
     apk add glibc-bin.apk glibc.apk && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
-    echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
+    # echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
     rm -rf glibc.apk glibc-bin.apk /var/cache/apk/*
 
 # Download and install calibre
@@ -39,12 +39,16 @@ RUN apk add --no-cache \
     tzdata \
     ;
     
-# set timezone
-RUN rm -rf /etc/localtime \
+# set timezone && create /opt
+RUN mkdir /opt \
+    && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
     
-RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python && \
-    rm -rf /tmp/calibre-installer-cache &&\
+WORKDIR /opt
+    
+RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py &&\
+    python linux-installer.py &&\
+    # rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
     
 RUN npm install gitbook-cli -g &&\
@@ -52,3 +56,4 @@ RUN npm install gitbook-cli -g &&\
     gitbook fetch 2.6.7 &&\
     rm -rf /var/cache/apk/*
     
+EXPOSE 4000
