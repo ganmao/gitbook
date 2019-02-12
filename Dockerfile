@@ -29,13 +29,14 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/calibre/lib \
     CALIBRE_INSTALLER_SOURCE_CODE_URL=https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py
     
 RUN apk add --no-cache \
-    bash \
+    # bash \
     ca-certificates \
     python \
     xdg-utils \
     gcc \
     mesa-gl \
     xz-dev \
+    xz \
     nodejs \
     npm \
     tzdata \
@@ -48,8 +49,9 @@ RUN mkdir /opt \
     
 WORKDIR /opt
     
-RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py &&\
-    python linux-installer.py &&\
+RUN curl -k -L https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin install_dir=/usr/local/bin isolated=y
+    # curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py &&\
+    # python linux-installer.py &&\
     # rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
     
