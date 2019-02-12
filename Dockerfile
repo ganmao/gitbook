@@ -33,6 +33,8 @@ RUN apk add --no-cache \
     ca-certificates \
     python \
     xdg-utils \
+    gcc \
+    mesa-gl \
     xz-dev \
     nodejs \
     npm \
