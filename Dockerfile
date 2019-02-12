@@ -35,7 +35,12 @@ RUN apk add --no-cache \
     xz-dev \
     nodejs \
     npm \
+    tzdata \
     ;
+    
+# set timezone
+RUN rm -rf /etc/localtime \
+    && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
     
 RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py | python && \
     rm -rf /tmp/calibre-installer-cache &&\
