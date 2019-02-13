@@ -53,9 +53,4 @@ RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python -c "import sys; mai
     rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
     
-RUN npm install gitbook-cli -g &&\
-    gitbook fetch &&\
-    gitbook fetch 2.6.7 &&\
-    rm -rf /var/cache/apk/*
-    
 EXPOSE 4000
