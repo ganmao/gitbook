@@ -20,6 +20,7 @@ RUN apt-get update \
     && rm -rf /tmp/* \
     && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    && alias ls="ls --color" \
     ;
 
 ENV PDF_NAME Book.pdf
