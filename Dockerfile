@@ -28,19 +28,18 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/calibre/lib \
     PATH=/opt/calibre/bin:$PATH \
     CALIBRE_INSTALLER_SOURCE_CODE_URL=https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py
     
-RUN apk add --no-cache \
-    # bash \
+RUN apk add --no-cache --upgrade \
+    bash \
     ca-certificates \
-    python \
-    xdg-utils \
     gcc \
     mesa-gl \
-    xz-dev \
+    python \
+    qt5-qtbase-x11 \
+    xdg-utils \
     xz \
     nodejs \
     npm \
     tzdata \
-    openssl \
     ;
     
 # set timezone && create /opt
@@ -50,10 +49,8 @@ RUN mkdir /opt \
     
 WORKDIR /opt
     
-RUN curl -k -L https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin install_dir=/opt isolated=y &&\
-    # curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} -o linux-installer.py &&\
-    # python linux-installer.py &&\
-    # rm -rf /tmp/calibre-installer-cache &&\
+RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main(install_dir='/opt', isolated=True)" && \
+    rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
     
 RUN npm install gitbook-cli -g &&\
