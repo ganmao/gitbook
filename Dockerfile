@@ -47,8 +47,6 @@ RUN mkdir /opt /gitbook \
     && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
     
-WORKDIR /opt
-    
 RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main(install_dir='/opt', isolated=True)" && \
     rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
@@ -56,5 +54,7 @@ RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python -c "import sys; mai
 RUN npm install gitbook-cli -g &&\
     gitbook fetch &&\
     gitbook fetch 2.6.7
+    
+WORKDIR /gitbook
     
 EXPOSE 4000
