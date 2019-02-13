@@ -11,7 +11,7 @@ LABEL build-date=$BUILD_DATE \
       MAINTAINER_MAIL="zdl0812@163.com"
 
 RUN apt-get update \
-    && apt-get install -y calibre git \
+    && apt-get install -y calibre git locale ttf-wqy-zenhei ttf-wqy-microhei\
     && apt-get clean \
     && npm install gitbook-cli -g \
     && gitbook fetch ${GITBOOK_VERSION} \
