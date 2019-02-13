@@ -16,7 +16,8 @@ RUN apt-get update \
     && apt-get clean \
     && npm install gitbook-cli -g \
     && gitbook fetch ${GITBOOK_VERSION} \
-    && npm cache clear \
+    && npm cache verif \
+    && npm cache clear --force \
     && rm -rf /tmp/* \
     && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
