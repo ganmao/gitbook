@@ -3,7 +3,7 @@ ARG ALPINE_VERSION=3.8
 ########################
 # Build And Install #
 ########################
-FROM alpine:$ALPINE_VERSION as build
+FROM alpine:$ALPINE_VERSION
 LABEL MAINTAINER_MAIL="zdl0812@163.com" \
       ALPINE_VERSION="3.8" \
       GITBOOK_VERSION="2.6.7+latest"
@@ -24,8 +24,8 @@ RUN apk add --no-cache \
     rm -rf glibc.apk glibc-bin.apk /var/cache/apk/*
 
 # Download and install calibre
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/calibre/lib \
-    PATH=/opt/calibre/bin:$PATH \
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/glibc-compat/lib:/usr/lib/:/opt/calibre/lib \
+    PATH=$PATH:/opt/calibre/bin \
     CALIBRE_INSTALLER_SOURCE_CODE_URL=https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py
     
 RUN apk add --no-cache --upgrade \
@@ -42,8 +42,8 @@ RUN apk add --no-cache --upgrade \
     tzdata \
     ;
     
-# set timezone && create /opt
-RUN mkdir /opt \
+# set timezone && create /opt /gitbook
+RUN mkdir /opt /gitbook \
     && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
     
@@ -52,5 +52,9 @@ WORKDIR /opt
 RUN curl -k -L ${CALIBRE_INSTALLER_SOURCE_CODE_URL} | python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main(install_dir='/opt', isolated=True)" && \
     rm -rf /tmp/calibre-installer-cache &&\
     rm -rf /var/cache/apk/*
+    
+RUN npm install gitbook-cli -g &&\
+    gitbook fetch &&\
+    gitbook fetch 2.6.7
     
 EXPOSE 4000
