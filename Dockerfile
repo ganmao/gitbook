@@ -12,6 +12,7 @@ LABEL build-date=$BUILD_DATE \
 
 RUN apt-get update \
     && apt-get install -y calibre git \
+    && apt-get clean \
     && npm install gitbook-cli -g \
     && gitbook fetch ${GITBOOK_VERSION} \
     && rm -rf /etc/localtime \
