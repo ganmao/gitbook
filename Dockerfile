@@ -40,6 +40,7 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     tzdata \
+    openssl \
     ;
     
 # set timezone && create /opt
