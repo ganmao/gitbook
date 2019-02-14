@@ -19,6 +19,7 @@ RUN apt-get update \
     && rm -rf /tmp/* \
     && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
+    && sed -i "s/^# export/export/" ~/.bashrc \
     && sed -i "s/^# alias/alias/" ~/.bashrc \
     ;
 
