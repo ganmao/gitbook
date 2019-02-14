@@ -5,7 +5,7 @@ ARG BUILD_DATE=20190213
 #设置环境变量
 ENV TIMEZONE="Asia/Shanghai" \
     GITBOOK_VERSION="3.2.3" \
-    LC_ALL="zh_CN.utf8"
+    LC_ALL="C.UTF-8"
 
 LABEL build-date=$BUILD_DATE \
       schema-version="1.0.0-rc1" \
@@ -19,10 +19,10 @@ RUN apt-get update \
     && rm -rf /tmp/* \
     && rm -rf /etc/localtime \
     && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
-    && alias ls="ls --color" \
+    && sed -i "s/^# alias/alias/" ~/.bashrc \
     ;
 
-ENV PDF_NAME Book.pdf
+ENV PDF_NAME GitBook.pdf
 
 VOLUME ["/gitbook", "/pdf"]
 
